@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Appointment extends Model
 {
     protected $fillable = [
+        'reference',
         'client_id',
         'expert_id',
         'scheduled_at',
@@ -14,6 +15,14 @@ class Appointment extends Model
         'problem_description',
         'status',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($appointment) {
+            $appointment->reference = 'REF-' . strtoupper(bin2hex(random_bytes(3)));
+        });
+    }
 
     public function client()
     {

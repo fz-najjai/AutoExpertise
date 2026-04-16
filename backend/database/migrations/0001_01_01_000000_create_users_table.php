@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['client', 'expert'])->default('client');
+            $table->enum('role', ['client', 'expert', 'admin'])->default('client');
             $table->boolean('is_validated')->default(false);
             $table->string('city')->nullable();
             $table->rememberToken();

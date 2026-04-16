@@ -115,4 +115,13 @@ class ExpertController extends Controller
 
         return response()->json(['message' => $message, 'appointment' => $appointment]);
     }
+    public function listAppointments(Request $request)
+    {
+        $appointments = Appointment::where('expert_id', $request->user()->id)
+            ->with(['client'])
+            ->orderBy('scheduled_at', 'asc')
+            ->get();
+            
+        return response()->json($appointments);
+    }
 }

@@ -24,8 +24,11 @@ class ExpertSeeder extends Seeder
                 'profile' => [
                     'specialty' => 'Expertise des accidents automobiles',
                     'price'     => 500.00,
-                    'bio'       => 'Expert automobile spécialisé dans l’analyse des accidents de la route. Il évalue les dommages des véhicules, détermine les causes techniques des collisions et rédige des rapports détaillés pour les assurances et les tribunaux.',
-                    'photo_url' => 'https://randomuser.me/api/portraits/men/32.jpg',
+                    'bio'       => 'Expert automobile spécialisé dans l’analyse des accidents de la route. Il évalue les dommages des véhicules, détermine les causes techniques des collisions.',
+                    'photo_url' => 'http://localhost:8001/expert_karim.png',
+                    'qualifications' => "Diplôme d'État d'Expert Automobile (DEEA)\nCertification technique supérieure",
+                    'experience' => "15 ans d'expérience en cabinet d'expertise indépendant\nExpert auprès des tribunaux depuis 2015",
+                    'services' => "Analyse de collision\nÉvaluation de dommages\nRapport d'expertise juridique",
                 ],
             ],
             [
@@ -40,8 +43,11 @@ class ExpertSeeder extends Seeder
                 'profile' => [
                     'specialty' => 'Évaluation des dommages automobiles',
                     'price'     => 350.00,
-                    'bio'       => 'Experte en estimation des dégâts matériels sur véhicules après accident. Elle intervient pour calculer les coûts de réparation, déterminer la valeur du véhicule et assister les compagnies d’assurance.',
-                    'photo_url' => 'https://randomuser.me/api/portraits/women/44.jpg',
+                    'bio'       => 'Experte en estimation des dégâts matériels sur véhicules après accident. Elle intervient pour calculer les coûts de réparation.',
+                    'photo_url' => 'http://localhost:8001/expert_nadia.png',
+                    'qualifications' => "Licence Professionnelle Maintenance des Systèmes\nSpécialisation Estimation de dommage",
+                    'experience' => "8 ans au sein d'une grande compagnie d'assurance\nSpécialiste de la valeur résiduelle",
+                    'services' => "Estimation de réparation\nValorisation de véhicule\nSuivi de travaux en garage",
                 ],
             ],
             [
@@ -56,8 +62,11 @@ class ExpertSeeder extends Seeder
                 'profile' => [
                     'specialty' => 'Expertise mécanique automobile',
                     'price'     => 400.00,
-                    'bio'       => 'Ingénieur mécanique spécialisé dans l’analyse technique des pannes automobiles. Il identifie les défaillances mécaniques, évalue l’état du moteur et des composants critiques des véhicules.',
-                    'photo_url' => 'https://randomuser.me/api/portraits/men/55.jpg',
+                    'bio'       => 'Ingénieur mécanique spécialisé dans l’analyse technique des pannes automobiles. Il identifie les défaillances mécaniques.',
+                    'photo_url' => 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&q=80&w=256&h=256',
+                    'qualifications' => "Ingénieur en Génie Mécanique\nCertification Maître Artisan mécanicien",
+                    'experience' => "Ancien Chef d'Atelier chez BMW\nSpécialiste des transmissions intégrales",
+                    'services' => "Diagnostic panne complexe\nExpertise moteur\nAnalyse d'huiles et fluides",
                 ],
             ],
             [
@@ -72,8 +81,11 @@ class ExpertSeeder extends Seeder
                 'profile' => [
                     'specialty' => 'Expertise des véhicules accidentés',
                     'price'     => 600.00,
-                    'bio'       => 'Spécialiste dans l’évaluation complète des véhicules gravement accidentés. Elle détermine si le véhicule est réparable ou classé économiquement irréparable et fournit un rapport technique détaillé.',
-                    'photo_url' => 'https://randomuser.me/api/portraits/women/68.jpg',
+                    'bio'       => 'Spécialiste dans l’évaluation complète des véhicules gravement accidentés. Elle détermine si le véhicule est réparable.',
+                    'photo_url' => 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=256&h=256',
+                    'qualifications' => "Expert Agréé Sécurité Routière\nSpécialisation structure et châssis",
+                    'experience' => "Formatrice en réparation carrosserie\nAudit de sécurité pour constructeurs",
+                    'services' => "Vérification de châssis\nContrôle de géométrie laser\nCertification de remise en circulation",
                 ],
             ],
             [
@@ -88,8 +100,11 @@ class ExpertSeeder extends Seeder
                 'profile' => [
                     'specialty' => 'Diagnostic électronique automobile',
                     'price'     => 450.00,
-                    'bio'       => 'Expert en systèmes électroniques des véhicules modernes. Il réalise des diagnostics avancés sur les calculateurs, capteurs et systèmes embarqués pour détecter les anomalies techniques.',
-                    'photo_url' => 'https://randomuser.me/api/portraits/men/77.jpg',
+                    'bio'       => 'Expert en systèmes électroniques des véhicules modernes. Il réalise des diagnostics avancés sur les calculateurs.',
+                    'photo_url' => 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=256&h=256',
+                    'qualifications' => "Expertise Électronique Embarquée\nCertification Systèmes Hybrides & Électriques",
+                    'experience' => "Développeur de solutions de diagnostic\nConsultant pour flottes logistiques",
+                    'services' => "Réinitialisation calculateurs\nRecherche de pannes électriques\nAudit systèmes ADAS",
                 ],
             ],
             [
@@ -104,8 +119,11 @@ class ExpertSeeder extends Seeder
                 'profile' => [
                     'specialty' => 'Inspection et estimation de véhicules d’occasion',
                     'price'     => 300.00,
-                    'bio'       => 'Experte dans l’inspection technique des véhicules d’occasion. Elle vérifie l’état général du véhicule, détecte les réparations cachées et estime la valeur réelle du véhicule sur le marché.',
-                    'photo_url' => 'https://randomuser.me/api/portraits/women/91.jpg',
+                    'bio'       => 'Experte dans l’inspection technique des véhicules d’occasion. Elle vérifie l’état général du véhicule.',
+                    'photo_url' => 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=256&h=256',
+                    'qualifications' => "Technicien Supérieur Automobile\nExpertise Valeur de Marché",
+                    'experience' => "Responsable de parc automobile\nAncienne contrôleuse technique",
+                    'services' => "Bilan complet avant achat\nVérification historique entretien\nEstimation prix de revente",
                 ],
             ],
         ];

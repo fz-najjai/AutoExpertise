@@ -18,19 +18,21 @@ class AuthController extends Controller
         
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
             'role' => 'required|in:client,expert',
-            'city' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'city' => 'nullable|string|max:255',
         ]);
 
         return DB::transaction(function () use ($request) {
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
+                'phone' => $request->phone,
                 'password' => Hash::make($request->password),
                 'role' => $request->role,
-                'city' => $request->city,
+                'city' => $request->city ?? 'Non spécifiée',
                 'is_validated' => true,
             ]);
 
@@ -85,6 +87,19 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Déconnexion réussie'
+        ]);
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email'
+        ], [
+            'email.exists' => 'Aucun compte associé à cette adresse e-mail.'
+        ]);
+
+        return response()->json([
+            'message' => 'Si cette adresse existe, un lien a été envoyé.',
         ]);
     }
 }

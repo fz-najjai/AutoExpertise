@@ -12,6 +12,9 @@ class ExpertProfile extends Model
         'price',
         'bio',
         'photo_url',
+        'qualifications',
+        'experience',
+        'services',
     ];
 
     public function user()

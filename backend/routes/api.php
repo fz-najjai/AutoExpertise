@@ -18,6 +18,7 @@ Route::post('/register-test', function () {
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -27,12 +28,19 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     // Admin routes
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboardStats']);
+    Route::get('/admin/experts', [AdminController::class, 'listExperts']);
+    Route::get('/admin/users', [AdminController::class, 'listUsers']);
+    Route::delete('/admin/users/{id}', [AdminController::class, 'deleteUser']);
     Route::post('/admin/validate-expert/{id}', [AdminController::class, 'validateExpert']);
 
     // Client routes
     Route::get('/client/experts', [ClientController::class, 'listExperts']);
+    Route::get('/client/experts/{id}', [ClientController::class, 'getExpertProfile']);
     Route::post('/client/appointments', [ClientController::class, 'createAppointment']);
     Route::get('/client/appointments', [ClientController::class, 'listAppointments']);
+    Route::get('/client/appointments/{id}', [ClientController::class, 'getBookingDetails']);
+    Route::put('/client/appointments/{id}', [ClientController::class, 'updateAppointment']);
     Route::put('/client/appointments/{id}/cancel', [ClientController::class, 'cancelAppointment']);
 
     // Expert routes
@@ -41,5 +49,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/expert/availabilities', [ExpertController::class, 'getAvailabilities']);
     Route::post('/expert/availabilities', [ExpertController::class, 'addAvailability']);
     Route::delete('/expert/availabilities/{id}', [ExpertController::class, 'deleteAvailability']);
+    Route::get('/expert/appointments', [ExpertController::class, 'listAppointments']);
     Route::put('/expert/appointments/{id}/manage', [ExpertController::class, 'manageRequest']);
 });
