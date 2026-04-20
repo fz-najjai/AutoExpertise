@@ -10,9 +10,17 @@ import {
   Menu,
   X,
   Clock,
-  Settings
+  Settings,
+  MessageSquare,
+  DollarSign,
+  Users,
+  CreditCard,
+  Star,
+  TrendingUp,
+  AlertTriangle
 } from 'lucide-react';
 import { useState } from 'react';
+import NotificationBell from '../components/NotificationBell';
 
 export default function ExpertLayout({ children }) {
   const { user, logout } = useAuth();
@@ -20,8 +28,10 @@ export default function ExpertLayout({ children }) {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const expertStatus = user.expertProfile?.status || user.expert_profile?.status || 'pending';
+
   // If not validated yet, don't show the full layout
-  if (!user.is_validated) {
+  if (expertStatus === 'pending') {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4 selection:bg-primary-500/30">
         <div className="glass-card p-12 rounded-[40px] shadow-2xl max-w-md w-full text-center space-y-8 border border-slate-200 animate-fade-in relative overflow-hidden bg-white">
@@ -49,11 +59,82 @@ export default function ExpertLayout({ children }) {
     );
   }
 
-  const menuItems = [
-    { name: 'Tableau de bord', icon: LayoutDashboard, path: '/expert/dashboard' },
-    { name: 'Demandes & RDV', icon: Briefcase, path: '/expert/requests' },
-    { name: 'Mes Disponibilités', icon: CalendarIcon, path: '/expert/availabilities' },
-    { name: 'Mon Profil', icon: Settings, path: '/expert/profile' },
+  if (expertStatus === 'rejected') {
+    return (
+      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4 selection:bg-primary-500/30">
+        <div className="glass-card p-12 rounded-[40px] shadow-2xl max-w-md w-full text-center space-y-8 border border-slate-200 animate-fade-in relative overflow-hidden bg-white">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/5 blur-3xl -mr-16 -mt-16"></div>
+          <div className="mx-auto w-24 h-24 bg-red-500/10 text-red-500 rounded-3xl flex items-center justify-center shadow-lg shadow-red-500/10 hover:scale-110 transition-transform">
+            <AlertTriangle className="w-10 h-10" />
+          </div>
+          <div className="space-y-3 relative z-10">
+            <h2 className="text-3xl font-black text-slate-900 tracking-tight">Candidature Rejetée</h2>
+            <p className="text-slate-500 leading-relaxed font-medium">
+              Malheureusement, votre demande d'expertise n'a pas été retenue par notre équipe. Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le support.
+            </p>
+          </div>
+          <div className="pt-4 relative z-10">
+            <button 
+              onClick={async () => { await logout(); navigate('/login'); }} 
+              className="w-full py-4 border border-slate-200 rounded-2xl text-slate-600 font-bold hover:bg-slate-50 transition-all active:scale-95 flex items-center justify-center gap-2 group"
+            >
+              <LogOut className="w-5 h-5 text-slate-400 group-hover:text-red-500 transition-colors" />
+              Se déconnecter
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const sidebarGroups = [
+    {
+      title: 'Principal',
+      items: [
+        { name: 'Tableau de bord', icon: LayoutDashboard, path: '/expert/dashboard' },
+        { name: 'Mon Profil Public', icon: UserIcon, path: '/expert/profile' },
+      ]
+    },
+    {
+      title: 'Agenda & Réservations',
+      items: [
+        { name: 'Demandes (Inbox)', icon: Briefcase, path: '/expert/requests', badge: 1 },
+        { name: 'Calendrier & Dispos', icon: CalendarIcon, path: '/expert/availabilities' },
+      ]
+    },
+    {
+      title: 'Clients',
+      items: [
+        { name: 'CRM & Historique', icon: Users, path: '/expert/crm' },
+      ]
+    },
+    {
+      title: 'Communication',
+      items: [
+        { name: 'Messages', icon: MessageSquare, path: '/expert/chat' },
+      ]
+    },
+    {
+      title: 'Finance',
+      items: [
+        { name: 'Reporting Revenus', icon: DollarSign, path: '/expert/earnings' },
+        { name: 'Virements', icon: CreditCard, path: '/expert/payouts' },
+      ]
+    },
+    {
+      title: 'Performance',
+      items: [
+        { name: 'Avis & Notation', icon: Star, path: '/expert/performance/reviews' },
+        { name: 'Statistiques', icon: TrendingUp, path: '/expert/performance/stats' },
+      ]
+    },
+    {
+      title: 'Paramètres',
+      items: [
+        { name: 'Préférences Agenda', icon: Clock, path: '/expert/settings/schedule' },
+        { name: 'Configuration du compte', icon: Settings, path: '/expert/settings/account' },
+      ]
+    }
   ];
 
   const handleLogout = async () => {
@@ -67,32 +148,48 @@ export default function ExpertLayout({ children }) {
       <aside className="hidden lg:flex w-72 flex-col fixed inset-y-0 z-50">
         <div className="flex-1 flex flex-col min-h-0 bg-white border-r border-slate-200 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-primary-500/5 blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
-          <div className="flex-1 flex flex-col pt-8 pb-4 overflow-y-auto relative z-10">
-            <div className="flex items-center flex-shrink-0 px-8 gap-3 mb-12 group cursor-pointer" onClick={() => navigate('/expert/dashboard')}>
+          <div className="flex-1 flex flex-col pt-8 pb-4 overflow-y-auto relative z-10 cs-scrollbar">
+            <div className="flex items-center flex-shrink-0 px-8 gap-3 mb-10 group cursor-pointer" onClick={() => navigate('/expert/dashboard')}>
               <div className="w-10 h-10 bg-primary-500 rounded-xl flex items-center justify-center text-white font-bold shadow-lg shadow-primary-500/20 group-hover:scale-110 transition-transform">
                 <Briefcase className="h-5 w-5" />
               </div>
-              <span className="text-xl font-black text-slate-900 tracking-[0.1em] group-hover:text-primary-500 transition-colors">EXPERTIS</span>
+              <span className="text-xl font-black text-slate-900 tracking-[0.1em] group-hover:text-primary-500 transition-colors uppercase">AutoExpertise</span>
             </div>
             
-            <nav className="flex-1 px-4 space-y-2">
-              {menuItems.map((item) => {
-                const isActive = location.pathname === item.path;
-                return (
-                  <Link
-                    key={item.name}
-                    to={item.path}
-                    className={`group flex items-center px-4 py-3.5 text-sm font-black rounded-2xl transition-all duration-200 ${
-                      isActive 
-                        ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/20' 
-                        : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
-                    }`}
-                  >
-                    <item.icon className={`mr-4 h-5 w-5 transition-colors ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-primary-500'}`} />
-                    {item.name}
-                  </Link>
-                );
-              })}
+            <nav className="flex-1 px-4 space-y-6">
+              {sidebarGroups.map((group, idx) => (
+                <div key={idx} className="space-y-2">
+                  <h3 className="px-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                    {group.title}
+                  </h3>
+                  <div className="space-y-1">
+                    {group.items.map((item) => {
+                      const isActive = location.pathname.startsWith(item.path);
+                      return (
+                        <Link
+                          key={item.name}
+                          to={item.path}
+                          className={`group flex items-center justify-between px-4 py-2.5 text-sm font-black rounded-2xl transition-all duration-200 ${
+                            isActive 
+                              ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/20' 
+                              : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
+                          }`}
+                        >
+                          <div className="flex items-center">
+                             <item.icon className={`mr-3 h-5 w-5 transition-colors ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-primary-500'}`} />
+                             {item.name}
+                          </div>
+                          {item.badge && (
+                             <span className={`px-2 py-0.5 rounded-[8px] text-[10px] font-black ${isActive ? 'bg-white/20 text-white' : 'bg-red-100 text-red-600'}`}>
+                               {item.badge}
+                             </span>
+                          )}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
             </nav>
           </div>
           <div className="flex-shrink-0 flex border-t border-slate-200 p-6 relative z-10">
@@ -100,7 +197,7 @@ export default function ExpertLayout({ children }) {
               onClick={handleLogout}
               className="group flex w-full items-center px-4 py-3 text-sm font-black text-red-500/80 rounded-2xl hover:bg-red-500/10 transition-all duration-200"
             >
-              <LogOut className="mr-4 h-5 w-5 group-hover:scale-110 transition-transform" />
+              <LogOut className="mr-3 h-5 w-5 group-hover:scale-110 transition-transform" />
               Déconnexion
             </button>
           </div>
@@ -131,10 +228,7 @@ export default function ExpertLayout({ children }) {
           </div>
 
           <div className="flex items-center gap-6">
-            <button className="relative p-2 text-slate-400 hover:text-slate-900 transition-colors group">
-              <Bell className="h-6 w-6 group-hover:rotate-12 transition-transform" />
-              <span className="absolute top-2 right-2 w-2 h-2 bg-primary-500 rounded-full border border-white"></span>
-            </button>
+            <NotificationBell />
             <div className="flex items-center gap-3 pl-6 border-l border-slate-200">
               <div className="text-right hidden sm:block">
                 <p className="text-sm font-black text-slate-900 leading-none">Dr. {user.name.split(' ')[0]}</p>
@@ -165,21 +259,44 @@ export default function ExpertLayout({ children }) {
                 <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-primary-500/20">
                   <Briefcase className="w-4 h-4" />
                 </div>
-                <span className="font-black text-slate-900 tracking-widest">EXPERTIS</span>
+                <span className="font-black text-slate-900 tracking-widest">EXPERTISE</span>
               </div>
               <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-slate-500 hover:text-slate-900"><X className="w-6 h-6" /></button>
             </div>
-            <nav className="flex-1 p-6 space-y-2 overflow-y-auto">
-              {menuItems.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  className="flex items-center px-4 py-3 text-sm font-black text-slate-500 rounded-2xl hover:bg-slate-50 hover:text-slate-900 transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <item.icon className="mr-4 h-5 w-5" />
-                  {item.name}
-                </Link>
+            <nav className="flex-1 p-6 space-y-6 overflow-y-auto">
+              {sidebarGroups.map((group, idx) => (
+                <div key={idx} className="space-y-2">
+                  <h3 className="px-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                    {group.title}
+                  </h3>
+                  <div className="space-y-1">
+                    {group.items.map((item) => {
+                      const isActive = location.pathname.startsWith(item.path);
+                      return (
+                        <Link
+                          key={item.name}
+                          to={item.path}
+                          className={`group flex items-center justify-between px-4 py-2 text-sm font-black rounded-2xl transition-all duration-200 ${
+                            isActive 
+                              ? 'bg-primary-500 text-white' 
+                              : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
+                          }`}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          <div className="flex items-center gap-3">
+                             <item.icon className="h-5 w-5" />
+                             {item.name}
+                          </div>
+                          {item.badge && (
+                             <span className={`px-2 py-0.5 rounded-[8px] text-[10px] font-black ${isActive ? 'bg-white/20 text-white' : 'bg-red-100 text-red-600'}`}>
+                               {item.badge}
+                             </span>
+                          )}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
               ))}
               <div className="pt-6 mt-6 border-t border-slate-200">
                 <button

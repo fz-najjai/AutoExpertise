@@ -33,4 +33,15 @@ class Appointment extends Model
     {
         return $this->belongsTo(User::class, 'expert_id');
     }
+
+    public function review()
+    {
+        return $this->hasOne(Review::class);
+    }
+
+    public function transaction()
+    {
+        return $this->hasOne(Transaction::class);
+    }
 }
+

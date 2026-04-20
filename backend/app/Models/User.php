@@ -27,6 +27,8 @@ class User extends Authenticatable
         'role',
         'is_validated',
         'city',
+        'latitude',
+        'longitude',
     ];
 
     public function expertProfile()
@@ -49,6 +51,51 @@ class User extends Authenticatable
         return $this->hasMany(Appointment::class, 'expert_id');
     }
 
+    public function reviewsGiven()
+    {
+        return $this->hasMany(Review::class, 'client_id');
+    }
+
+    public function reviewsReceived()
+    {
+        return $this->hasMany(Review::class, 'expert_id');
+    }
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    public function favoritedByClients()
+    {
+        return $this->hasMany(Favorite::class, 'expert_id');
+    }
+
+    public function favoredBy()
+    {
+        return $this->belongsToMany(User::class, 'favorites', 'expert_id', 'user_id');
+    }
+
+    public function reportsSent()
+    {
+        return $this->hasMany(Report::class, 'reporter_id');
+    }
+
+    public function reportsReceived()
+    {
+        return $this->hasMany(Report::class, 'reported_id');
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'client_id');
+    }
+
+    public function conversations()
+    {
+        return $this->hasMany(Conversation::class, $this->role === 'expert' ? 'expert_id' : 'client_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -68,7 +115,10 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password'          => 'hashed',
+            'latitude'          => 'float',
+            'longitude'         => 'float',
+            'is_validated'      => 'boolean',
         ];
     }
 }

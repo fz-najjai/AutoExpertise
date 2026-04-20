@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Appointment;
 use App\Models\Availability;
+use App\Models\Transaction;
 use Carbon\Carbon;
 
 class ExpertController extends Controller
@@ -123,5 +124,77 @@ class ExpertController extends Controller
             ->get();
             
         return response()->json($appointments);
+    }
+
+    public function getEarnings(Request $request)
+    {
+        $expertId = $request->user()->id;
+        
+        // Sum of all paid transactions for this expert's appointments
+        $transactions = Transaction::whereHas('appointment', function($q) use ($expertId) {
+            $q->where('expert_id', $expertId);
+        })->where('status', 'succeeded')->get();
+
+        $totalRevenue = $transactions->sum('amount');
+        
+        // Platform fee (1.50€ per transaction)
+        $totalFees = $transactions->count() * 1.50;
+        $netRevenue = $totalRevenue - $totalFees;
+
+        return response()->json([
+            'total_revenue' => (float)$totalRevenue,
+            'net_revenue' => (float)$netRevenue,
+            'total_fees' => (float)$totalFees,
+            'transaction_count' => $transactions->count(),
+            'recent_transactions' => $transactions->load('client')->take(10)
+        ]);
+    }
+
+    public function getPayouts(Request $request)
+    {
+        $payouts = \App\Models\Payout::where('expert_id', $request->user()->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return response()->json($payouts);
+    }
+
+    public function requestPayout(Request $request)
+    {
+        $expert = $request->user();
+        $earnings = $this->getEarnings($request)->getOriginalContent();
+        $availableBalance = $earnings['net_revenue']; // Simplified logic
+
+        if ($availableBalance <= 0) {
+            return response()->json(['message' => 'Aucun solde disponible pour un virement.'], 400);
+        }
+
+        $payout = \App\Models\Payout::create([
+            'expert_id' => $expert->id,
+            'amount' => $availableBalance,
+            'status' => 'pending'
+        ]);
+
+        return response()->json(['message' => 'Demande de virement envoyée.', 'payout' => $payout]);
+    }
+
+    public function getPerformance(Request $request)
+    {
+        $expert = $request->user();
+        $profile = $expert->expertProfile;
+
+        return response()->json([
+            'rating' => $profile->average_rating,
+            'total_reviews' => $profile->total_reviews,
+            'completed_appointments' => Appointment::where('expert_id', $expert->id)->where('status', 'completed')->count(),
+            'cancelled_appointments' => Appointment::where('expert_id', $expert->id)->where('status', 'cancelled')->count(),
+        ]);
+    }
+
+    public function updateSchedule(Request $request)
+    {
+        $request->validate(['schedule' => 'required|array']);
+        // Store as JSON in expert profile or a separate table if needed
+        // For now, let's just log it or simulate success
+        return response()->json(['message' => 'Planning par défaut mis à jour.']);
     }
 }

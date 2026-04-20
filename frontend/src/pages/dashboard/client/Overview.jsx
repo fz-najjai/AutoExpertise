@@ -12,6 +12,7 @@ import {
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { Link, useNavigate } from 'react-router-dom';
+import RecommendedExperts from '../../../components/RecommendedExperts';
 
 export default function Overview() {
   const { user } = useAuth();
@@ -140,6 +141,11 @@ export default function Overview() {
             </Link>
           </div>
         )}
+      </section>
+
+      {/* Smart Recommendations Section */}
+      <section className="animate-fade-up" style={{ animationDelay: '200ms' }}>
+         <RecommendedExperts />
       </section>
 
       {/* Quick Actions / Categories */}

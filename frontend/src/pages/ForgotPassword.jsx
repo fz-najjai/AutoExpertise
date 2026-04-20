@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Mail, AlertCircle, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { api } from '../context/AuthContext';
 
@@ -8,6 +8,7 @@ export default function ForgotPassword() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,6 +18,10 @@ export default function ForgotPassword() {
     try {
       await api.post('/forgot-password', { email });
       setSubmitted(true);
+      // Redirect to reset password page after 2 seconds
+      setTimeout(() => {
+        navigate('/reset-password');
+      }, 2000);
     } catch (err) {
       setError(err.response?.data?.message || 'Une erreur est survenue.');
     } finally {
@@ -32,7 +37,7 @@ export default function ForgotPassword() {
             <div className="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center text-white font-bold text-2xl shadow-xl shadow-slate-900/20">
               A
             </div>
-            <span className="text-2xl font-bold tracking-tight text-slate-900">AutoExpertis</span>
+            <span className="text-2xl font-bold tracking-tight text-slate-900">AutoExpertise</span>
           </Link>
           <h1 className="text-4xl font-bold text-slate-900 tracking-tight">Mot de passe oublié ?</h1>
         </div>
@@ -88,13 +93,9 @@ export default function ForgotPassword() {
               <h3 className="text-2xl font-bold text-slate-900 mb-3">Lien envoyé !</h3>
               <p className="text-slate-500 mb-8 leading-relaxed">
                 Consultez votre boîte mail {email} pour réinitialiser votre mot de passe.
+                <br />
+                <span className="text-sm text-slate-400 mt-2 block">Redirection vers la page de réinitialisation...</span>
               </p>
-              <button 
-                onClick={() => setSubmitted(false)}
-                className="text-slate-900 font-bold hover:underline underline-offset-4"
-              >
-                Renvoyer le lien
-              </button>
             </div>
           )}
 

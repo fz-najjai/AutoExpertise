@@ -33,9 +33,9 @@ export default function Login() {
             <div className="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center text-white font-bold text-2xl shadow-xl shadow-slate-900/20">
               A
             </div>
-            <span className="text-2xl font-bold tracking-tight text-slate-900">AutoExpertis</span>
+            <span className="text-2xl font-bold tracking-tight text-slate-900">AutoExpertise</span>
           </Link>
-          <h1 className="text-4xl font-bold text-slate-900 tracking-tight">Bienvenue sur AutoExpertis</h1>
+          <h1 className="text-4xl font-bold text-slate-900 tracking-tight">Bienvenue sur AutoExpertise</h1>
         </div>
 
         <div className="glass-card p-10 rounded-[32px]">
@@ -98,7 +98,7 @@ export default function Login() {
           </form>
 
           <div className="mt-8 flex flex-col gap-4 text-center text-sm font-medium">
-            <Link to="/forgot-password pillbox" className="text-slate-500 hover:text-slate-900 underline underline-offset-4">
+            <Link to="/forgot-password" className="text-slate-500 hover:text-slate-900 underline underline-offset-4">
               Mot de passe oublié ?
             </Link>
             <div className="text-slate-400">

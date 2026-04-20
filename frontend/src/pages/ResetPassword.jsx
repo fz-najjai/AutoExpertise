@@ -46,7 +46,7 @@ export default function ResetPassword() {
             <div className="w-14 h-14 bg-slate-900 rounded-2xl flex items-center justify-center text-white font-bold text-2xl shadow-2xl shadow-slate-900/20 group-hover:scale-105 transition-transform">
               A
             </div>
-            <span className="text-3xl font-black tracking-tighter text-slate-900">AutoExpertis</span>
+            <span className="text-3xl font-black tracking-tighter text-slate-900">AutoExpertise</span>
           </Link>
           <h1 className="text-5xl font-black text-slate-900 tracking-tight leading-tight">
              Créer un nouveau <br/> mot de passe
@@ -137,7 +137,7 @@ export default function ResetPassword() {
         </div>
 
         <p className="text-center mt-12 text-slate-400 font-bold uppercase tracking-widest text-[10px]">
-          &copy; 2024 AUTOEXPERTIS — Sécurité Certifiée
+          &copy; 2024 AUTOEXPERTISE — Sécurité Certifiée
         </p>
       </div>
     </div>

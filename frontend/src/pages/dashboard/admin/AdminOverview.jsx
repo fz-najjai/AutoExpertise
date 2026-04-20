@@ -31,7 +31,7 @@ export default function AdminOverview() {
     <div className="space-y-10">
       <div className="space-y-2">
         <h2 className="text-3xl font-black text-white tracking-tight">Analyse de Vaisseau</h2>
-        <p className="text-indigo-200/50 font-medium tracking-tight">Supervisez l'activité et l'état global d'AutoExpertis.</p>
+        <p className="text-indigo-200/50 font-medium tracking-tight">Supervisez l'activité et l'état global d'AutoExpertise.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

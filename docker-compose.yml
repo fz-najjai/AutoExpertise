@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  # Backend App
+  app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: autoexpertise-backend
+    container_name: autoexpertise-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./backend:/var/www
+    networks:
+      - expertise-network
+    depends_on:
+      - db
+
+  # Reverb WebSocket Server
+  reverb:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: autoexpertise-backend
+    container_name: autoexpertise-reverb
+    restart: unless-stopped
+    command: php artisan reverb:start --host=0.0.0.0 --port=8080
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend:/var/www
+    networks:
+      - expertise-network
+    depends_on:
+      - app
+
+  # Database
+  db:
+    image: mariadb:10.11
+    container_name: autoexpertise-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: expertise
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3306:3306"
+    networks:
+      - expertise-network
+
+  # Frontend
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: autoexpertise-frontend
+    container_name: autoexpertise-web
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    networks:
+      - expertise-network
+    depends_on:
+      - app
+
+networks:
+  expertise-network:
+    driver: bridge

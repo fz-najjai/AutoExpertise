@@ -12,6 +12,35 @@ use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
+    /**
+     * @OA\Post(
+     *     path="/register",
+     *     summary="Inscription d'un nouvel utilisateur",
+     *     tags={"Authentification"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"name","email","password","role","phone"},
+     *             @OA\Property(property="name", type="string", example="Jean Dupont"),
+     *             @OA\Property(property="email", type="string", format="email", example="jean@example.com"),
+     *             @OA\Property(property="password", type="string", format="password", example="secret123"),
+     *             @OA\Property(property="role", type="string", enum={"client", "expert"}, example="client"),
+     *             @OA\Property(property="phone", type="string", example="0612345678"),
+     *             @OA\Property(property="city", type="string", example="Casablanca")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Utilisateur créé avec succès",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="user", type="object"),
+     *             @OA\Property(property="access_token", type="string"),
+     *             @OA\Property(property="token_type", type="string", example="Bearer")
+     *         )
+     *     ),
+     *     @OA\Response(response=422, description="Erreur de validation")
+     * )
+     */
     public function register(Request $request)
     {
         file_put_contents(__DIR__ . '/../../../storage/logs/auth_debug.log', date('Y-m-d H:i:s') . " - Register started\n", FILE_APPEND);
@@ -33,7 +62,8 @@ class AuthController extends Controller
                 'password' => Hash::make($request->password),
                 'role' => $request->role,
                 'city' => $request->city ?? 'Non spécifiée',
-                'is_validated' => true,
+                'is_validated' => $request->role === 'client', // Clients auto-validated, Experts wait
+
             ]);
 
             if ($user->role === 'expert') {
@@ -42,6 +72,7 @@ class AuthController extends Controller
                     'specialty' => 'Non spécifié',
                     'price' => 0,
                     'bio' => '',
+                    'status' => 'pending',
                 ]);
             }
 
@@ -57,6 +88,31 @@ class AuthController extends Controller
         });
     }
 
+    /**
+     * @OA\Post(
+     *     path="/login",
+     *     summary="Connexion utilisateur",
+     *     tags={"Authentification"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"email","password"},
+     *             @OA\Property(property="email", type="string", format="email", example="jean@example.com"),
+     *             @OA\Property(property="password", type="string", format="password", example="secret123")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Connexion réussie",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="user", type="object"),
+     *             @OA\Property(property="access_token", type="string"),
+     *             @OA\Property(property="token_type", type="string", example="Bearer")
+     *         )
+     *     ),
+     *     @OA\Response(response=422, description="Identifiants incorrects")
+     * )
+     */
     public function login(Request $request)
     {
         $request->validate([
@@ -81,6 +137,20 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/logout",
+     *     summary="Déconnexion",
+     *     tags={"Authentification"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Déconnexion réussie",
+     *         @OA\JsonContent(@OA\Property(property="message", type="string", example="Déconnexion réussie"))
+     *     ),
+     *     @OA\Response(response=401, description="Non authentifié")
+     * )
+     */
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();

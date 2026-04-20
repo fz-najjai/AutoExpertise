@@ -22,7 +22,7 @@ export default function Home() {
             <div className="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-slate-900/20">
               A
             </div>
-            <span className="text-xl font-black tracking-widest uppercase">AutoExpertis</span>
+            <span className="text-xl font-black tracking-widest uppercase">AutoExpertise</span>
           </div>
           <div className="flex items-center gap-4">
             <Link to="/login" className="px-5 py-2.5 font-bold text-slate-500 hover:text-slate-900 transition-colors">
@@ -37,17 +37,21 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-white">
-        <div className="absolute top-0 right-0 w-1/2 h-full z-0 hidden lg:block">
-          <div className="absolute inset-0 bg-gradient-to-l from-transparent via-white/50 to-white z-10"></div>
+        <div className="absolute top-0 right-0 w-full lg:w-[50%] h-full z-0 hidden lg:block pointer-events-none">
           <img 
             src="/hero.png" 
             alt="Auto Expert Hero" 
-            className="w-full h-full object-cover rounded-l-[100px] shadow-2xl"
+            className="w-full h-full object-cover transition-transform duration-700"
+            style={{ 
+              objectPosition: 'center 30%',
+              maskImage: 'linear-gradient(to right, transparent, black 25%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent, black 25%)'
+            }}
           />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 lg:px-8 relative z-10">
-          <div className="max-w-2xl animate-fade-in">
+          <div className="max-w-2xl xl:max-w-3xl animate-fade-in pr-8 text-shadow-sm">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-black uppercase tracking-widest mb-6">
                <CheckCircle2 className="w-3 h-3" /> N°1 de l'expertise au Maroc
             </div>
@@ -144,7 +148,7 @@ export default function Home() {
                  <span className="text-[10px] font-black uppercase tracking-widest text-primary-500 mb-2 block">Garantie Qualité</span>
                  <h2 className="text-4xl lg:text-5xl font-black tracking-tight mb-6">Ne prenez plus de risques à l'aveugle.</h2>
                  <p className="text-slate-500 font-medium text-lg mb-8 leading-relaxed">
-                   Acheter une voiture d'occasion est toujours stressant. Vices cachés, kilométrage truqué, accidents masqués. Avec AutoExpertis, vous achetez la certitude.
+                   Acheter une voiture d'occasion est toujours stressant. Vices cachés, kilométrage truqué, accidents masqués. Avec AutoExpertise, vous achetez la certitude.
                  </p>
                  <div className="space-y-6">
                     <div className="flex items-start gap-4">
@@ -276,7 +280,7 @@ export default function Home() {
                   <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white font-bold text-sm">
                     A
                   </div>
-                  <span className="text-xl font-black tracking-widest uppercase">AutoExpertis</span>
+                  <span className="text-xl font-black tracking-widest uppercase">AutoExpertise</span>
                 </div>
                 <p className="text-slate-500 font-medium max-w-sm leading-relaxed mb-6">
                    La première plateforme de mise en relation entre acheteurs exigeants et mécaniciens certifiés indépendants.
@@ -303,7 +307,7 @@ export default function Home() {
            </div>
 
            <div className="border-t border-slate-100 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-slate-400 font-semibold text-sm">
-              <p>&copy; 2026 AutoExpertis. Tous droits réservés.</p>
+              <p>&copy; 2026 AutoExpertise. Tous droits réservés.</p>
               <div className="flex gap-6">
                  Made with passion by A.I.
               </div>

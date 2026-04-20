@@ -32,6 +32,9 @@ export default function BookingConfirmation() {
         
         <div className="space-y-4">
           <h2 className="text-5xl font-black text-slate-900 tracking-tight">Votre réservation est confirmée !</h2>
+          <div className="flex items-center justify-center gap-2 text-emerald-600 font-black uppercase tracking-[0.2em] text-[10px] bg-emerald-50 w-fit mx-auto px-4 py-1.5 rounded-full border border-emerald-100">
+             <CheckCircle className="w-3 h-3" /> Paiement sécurisé et validé
+          </div>
           <p className="text-slate-500 font-medium text-lg">Un email de confirmation vous a été envoyé à votre adresse.</p>
         </div>
       </div>

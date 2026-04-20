@@ -54,7 +54,7 @@ export default function AdminExperts() {
         <h2 className="text-3xl font-black text-white tracking-tight flex items-center gap-4">
           <ShieldCheck className="w-8 h-8 text-indigo-400" /> Validation & Modération
         </h2>
-        <p className="text-indigo-200/50 font-medium tracking-tight">Gérez les accès des mécaniciens professionnels à la plateforme AutoExpertis.</p>
+        <p className="text-indigo-200/50 font-medium tracking-tight">Gérez les accès des mécaniciens professionnels à la plateforme AutoExpertise.</p>
       </div>
 
       <div className="glass-card rounded-[32px] border border-indigo-900/40 overflow-hidden shadow-2xl bg-[#020617] relative">

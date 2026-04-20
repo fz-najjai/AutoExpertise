@@ -42,7 +42,7 @@ export default function Register() {
             <div className="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-slate-900/10">
               A
             </div>
-            <span className="text-xl font-bold tracking-tight text-slate-900">AutoExpertis</span>
+            <span className="text-xl font-bold tracking-tight text-slate-900">AutoExpertise</span>
           </Link>
           <h1 className="text-4xl font-bold text-slate-900 tracking-tight">Créer votre compte</h1>
         </div>

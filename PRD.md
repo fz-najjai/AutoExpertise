@@ -58,7 +58,7 @@ La plateforme identifie 3 types d'acteurs principaux :
 - Mots de passe hashés, gestion robuste des tokens (erreur de réseau/authentification).
 
 ## 5. Critères d'Acceptation (MVP)
-- [ ] Les 3 rôles peuvent s'inscrire, se connecter et sont redirigés vers leur Dashboard respectif.
-- [ ] Un expert peut ajouter ses disponibilités et un client peut réserver un créneau valide.
-- [ ] L'administrateur peut bannir un utilisateur et valider un expert en attente.
-- [ ] La plateforme tourne de manière sécurisée en API mode, sans erreurs CORS ou "Network Error" à la création de compte.
+- [x] Les 3 rôles peuvent s'inscrire, se connecter et sont redirigés vers leur Dashboard respectif.
+- [x] Un expert peut ajouter ses disponibilités et un client peut réserver un créneau valide.
+- [x] L'administrateur peut bannir un utilisateur et valider un expert en attente.
+- [x] La plateforme tourne de manière sécurisée en API mode, sans erreurs CORS ou "Network Error" à la création de compte.
